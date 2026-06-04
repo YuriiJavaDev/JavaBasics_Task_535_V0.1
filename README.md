@@ -1,26 +1,27 @@
-# Component Event Interaction: Starship Command Processor (JavaBasics_Task_527_V0.1)
+# MyAssistant - Layered Desktop Architecture: Decoupled View Patterns and Command Actions (JavaBasics_Task_535_V0.1)
 
 ## 📖 Description
-In advanced software architecture, separating the core business event execution layer from the physical user interface tier is fundamental to building resilient, testable codebases. This project demonstrates this behavioral isolation inside a futuristic starship command module context. By implementing a dedicated **`StarshipCommandProcessor`** class bound directly to the standard Java **`ActionListener`** protocol, the execution engine decouples system action reactions from hardware buttons or voice streams. The execution sequence is simulated directly inside the application bootstrap entry point by passing a `null` argument matrix into the processor, proving that operational business actions can be validated entirely outside active graphical rendering threads.
+Building scalable enterprise desktop client environments requires a strict adherence to modular software boundaries. This project initializes **MyAssistant**, delivering a decoupled **Layered Architecture** implementation using Java Swing. The core GUI layer (**`TaskPanel`**) serves strictly as a presentation anchor, delegating interactive operational mutations (`addTask`, `deleteTask`, `editTask`) to standalone encapsulated objects extending **`AbstractAction`**. Business layers are mapped across distinct operational boundaries (`controller`, `service`, `repository`, `model`), separating data caching mechanics from interactive widgets. Visual look-and-feel configurations are centralized inside a dedicated utility framework to avoid hardcoded interface rules.
 
 ## 📋 Requirements Compliance
-- **Interface Protocol Compliance**: Fully implemented the native `ActionListener` lifecycle roadmap.
-- **Encapsulated Log Streaming**: Programmed the `actionPerformed` block to output a solemn starship activation message.
-- **Isolated Component Testing Matrix**: Instantiated and executed the processing model directly without initializing heavy `JFrame` window resources.
-- **Null-Safe Mock Invocation**: Successfully routed the manual execution path by explicitly passing `null` into the event parameter slot.
+- **Initial Modular Workspace Setup**: Configured the foundation directory layout aligning to core production directory boundaries.
+- **Strict View and Command Decoupling**: Isolated user button interactions away from layout blueprints into independent actions.
+- **Centralized Environment Control**: Bound user appearance behaviors and anti-aliasing hints to a static configuration utility.
+- **Multi-Layered Context Tracking**: Implemented structural data flows routing safely from view inputs down to memory repositories.
 
 ## 🚀 Architectural Stack
-- Java 17+ (Java AWT Event Delegation Architecture)
+- Java 17+ (Java Swing GUI Component Subsystem, Layered Architecture, Command Design Patterns)
 
 ## 🏗️ Implementation Details
-- **Solution**: The master system bootstrap entry runner orchestrating the simulated starship subsystem testing sequence.
-- **StarshipCommandProcessor**: The encapsulated core logical command interpreter acting as the action pipeline target.
+- **MyAssistantApp**: Main executable class acting as the root orchestrator and application bootstrapper.
+- **ui**: Contains frame contexts, structural display panels, and isolated dialogue popups.
+- **ui.actions**: Command entities managing standalone validation, selection checks, and backend trigger routing.
+- **controller / service / repository / model**: Core business logic layers facilitating underlying entity mutations.
+- **util**: Central configuration tool management for graphics smoothing and global theme parameters.
 
 ## 📋 Expected result
-*(Running the application immediately logs the terminal execution payload to the system output log)*
-```text
-Starship's core module successfully activated!
-```
+- Running the root entrypoint builds a uniform, clean interface layout free from rendering shadows or artifacts.
+- Modifying tracking items safely executes validation schemes, updates downstream memory caches, and updates the list presentation.
 
 ## 💻 Code Example
 
@@ -74,22 +75,33 @@ Code
 ```java
 package com.yurii.pavlenko.app;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import com.yurii.pavlenko.controller.TaskController;
+import com.yurii.pavlenko.repository.TaskRepository;
+import com.yurii.pavlenko.repository.impl.InMemoryTaskRepositoryImpl;
+// import com.yurii.pavlenko.repository.impl.JsonTaskRepositoryImpl;
+// import com.yurii.pavlenko.repository.impl.DatabaseTaskRepositoryImpl;
+import com.yurii.pavlenko.service.TaskService;
+import com.yurii.pavlenko.service.impl.TaskServiceImpl;
+import com.yurii.pavlenko.ui.frames.TaskFrame;
+import com.yurii.pavlenko.util.Util;
 
-public class StarshipCommandApp {
+import javax.swing.*;
+
+public class MyAssistantApp {
 
     public static void main(String[] args) {
-        StarshipCommandProcessor processor = new StarshipCommandProcessor();
-        processor.actionPerformed(null);
-    }
-}
 
-class StarshipCommandProcessor implements ActionListener {
+        Util.configureLookAndFeel();
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-         System.out.println("Starship's core module successfully activated!");
+        TaskRepository repo = new InMemoryTaskRepositoryImpl();
+
+        // TaskRepository repo = new JsonTaskRepositoryImpl();
+        // TaskRepository repo = new DatabaseTaskRepositoryImpl();
+
+        TaskService service = new TaskServiceImpl(repo);
+        TaskController controller = new TaskController(service);
+
+        SwingUtilities.invokeLater(() -> new TaskFrame(controller));
     }
 }
 ```
