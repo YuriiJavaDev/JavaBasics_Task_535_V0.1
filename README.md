@@ -23,7 +23,7 @@ Building scalable enterprise desktop client environments requires a strict adher
 - Running the root entrypoint builds a uniform, clean interface layout free from rendering shadows or artifacts.
 - Modifying tracking items safely executes validation schemes, updates downstream memory caches, and updates the list presentation.
 
-## UML Diagram:
+## 📚 UML Diagram:
 ![MyAssistantDiagram](src/resources/images/MyAssistantDiagram.png)
 
 ## 💻 Code Example
